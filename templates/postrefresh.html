@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Auction Tracker</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <style>
+            #forms_parent:after {
+                content: '';
+                display: block;
+                clear: both;
+                padding-top: 20px;
+            }
+
+            #forms {
+                padding-left: 20%;
+                padding-right: 20%;
+                padding-top: 20px;
+            }
+
+            #Auctions {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            #save_n_submit {
+                padding-left: 20%;
+                padding-right: 20%;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header class="navbar">
+            <section class="navbar-section">
+              <a href="http://127.0.0.1:5000/" class="navbar-brand mr-2">Strona Główna</a>
+            </section>
+        </header>
+
+
+        <div id="forms_parent">
+            <div id="forms">
+                <form id="track" action="track" method="post">
+                    <div class="form-group">
+                        <label class="form-label" for="input-example-1">Śledź ogłoszenia</label>
+                        <input class="form-input" type="text" id="input-example-1" name="make" placeholder="Marka (wymagane)" required>
+                        <input class="form-input" type="text" id="input-example-1" name="model" placeholder="Model (wymagane)" required>
+                        <input class="form-input" type="number" id="input-example-1" name="year_from" placeholder="Od rocznika">
+                        <input class="form-input" type="number" id="input-example-1" name="year_to" placeholder="Do rocznika">
+                        <input class="form-input" type="text" id="input-example-1" name="fuel" placeholder="Silnik">
+                        <input class="form-input" type="number" id="input-example-1" name="price_from" placeholder="Cena od">
+                        <input class="form-input" type="number" id="input-example-1" name="price_to" placeholder="Cena do">
+                        <button class="btn-sm">Śledź</button>
+                    </div>
+                </form>    
+                <!-- <form id="sell_form" action="sell_product" method="post">
+                    <div class="form-group">
+                        <label class="form-label" for="input-example-1">Sprzedaż</label>
+                        <input class="form-input" type="text" id="input-example-1" name="product_name" placeholder="Nazwa Produktu" required>
+                        <input class="form-input" type="number" id="input-example-1" name="sell_price" placeholder="Cena jednostkowa" required>
+                        <input class="form-input" type="number" id="input-example-1" name="units" placeholder="Liczba sztuk" required>
+                        <button class="btn-sm">Wprowadź sprzedaż</button>
+                    </div>
+                </form> -->
+                <!-- <form id="balance_form" action="balance_update" method="post">
+                    <div class="form-group">
+                        <label class="form-label" for="input-example-1">Saldo</label>
+                        <input class="form-input" type="number" id="input-example-1" name="balance_update" placeholder="Wartość" required>
+                        <button class="btn-sm">Wprowadź saldo</button>
+                    </div>
+                </form> -->
+            </div>
+        </div>
+
+
+        <div id="Auctions">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Info</th>
+                        <th>Przebieg</th>
+                        <th>Silnik</th>
+                        <th>Skrzynia biegów</th>
+                        <th>Rok produkcji</th>
+                        <th>Cena po odświeżeniu</th>
+                        <th>Różnica</th>
+                        <th>Waluta</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in scrap.items() %}
+                    <tr>
+                        <td>{{ value["title"] }}</td>
+                        <td>{{ value["subtitle"] }}</td>
+                        <td>{{ value["mileage"] }}</td>
+                        <td>{{ value["fueltype"] }}</td>
+                        <td>{{ value["gearbox"] }}</td>
+                        <td>{{ value["year"] }}</td>
+                        <td>{{  value["price"]  }}</td>
+                        <td>{{  dbs[key]["price"] - value["price"]  }}</td>
+                        <td>{{  value["currency"]  }}</td>
+                        <td>{{  value["link"]  }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>        
+
+        <form id="save" action="save" method="post">
+            <button class="btn btn-success">Zapisz</button>
+        </form>
+
+
+        
+    </body>
+</html>
